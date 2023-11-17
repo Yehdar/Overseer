@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overseer</title>
+    <link rel="icon" href="./assets/logo.png" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: darkslateblue;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      .dashboard {
+        position: relative;
+        width: 80vw;
+        height: 40vh;
+        margin: 10vh auto;
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .container {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+
+      h1 {
+        color: white;
+        font-size: 4em;
+      }
+
+      .gauge-title {
+        font-size: 2em; /* Adjust the size as needed */
+        color: white; /* You can customize the color */
+        margin-top: -50px;
+      }
+
+      .dashboard {
+        display: flex;
+        justify-content: space-around;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .plotly-graph-div {
+        width: 45%;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .alert {
+        color: #ff0033;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid #ff0033;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="car-dashboard">
+      <div class="container">
+        <h1>Overseer</h1>
+        <div class="dashboard">
+          <div id="cpu-gauge" class="plotly-graph-div">
+            <div class="gauge-title">CPU Utilization</div>
+          </div>
+          <div id="mem-gauge" class="plotly-graph-div">
+            <div class="gauge-title">Memory Utilization</div>
+          </div>
+        </div>
+        {% if message %}
+        <div class="alert">{{ message }}</div>
+        {% endif %}
+      </div>
+    </div>
+    <script>
+      var cpuGauge = {
+          type: "indicator",
+          mode: "gauge+number",
+          value: {{ cpu_percent }},
+          gauge: {
+              axis: { range: [0, 100], tickwidth: 2, tickcolor: "#ffcc00" },
+              bar: { color: "rgba(0,0,0,0)" },
+              bgcolor: "rgba(0, 0, 0, 0)",
+              borderwidth: 2,
+              bordercolor: "#0a0a0a",
+              steps: [
+                  { range: [0, 30], color: "darkcyan" },
+                  { range: [30, 70], color: "#ffcc00" },
+                  { range: [70, 100], color: "#ff0033" }
+              ],
+              threshold: {
+                  line: { color: "#ff0033", width: 4 },
+                  thickness: 1,
+                  value: {{ cpu_percent }}
+              }
+          }
+      };
+
+      var memGauge = {
+        type: "indicator",
+          mode: "gauge+number",
+          value: {{ mem_percent }},
+          gauge: {
+              axis: { range: [0, 100], tickwidth: 2, tickcolor: "#ffcc00" },
+              bar: { color: "rgba(0,0,0,0)" },
+              bgcolor: "rgba(0, 0, 0, 0)",
+              borderwidth: 2,
+              bordercolor: "#0a0a0a",
+              steps: [
+                  { range: [0, 30], color: "darkcyan" },
+                  { range: [30, 70], color: "#ffcc00" },
+                  { range: [70, 100], color: "#ff0033" }
+              ],
+              threshold: {
+                  line: { color: "#ff0033", width: 4 },
+                  thickness: 1,
+                  value: {{ mem_percent }}
+              }
+          }
+      };
+
+      var cpuGaugeLayout = { title: "", paper_bgcolor: 'rgba(0, 0, 0, 0.7)', font: { color: '#fff' }};
+      var memGaugeLayout = { title: "", paper_bgcolor: 'rgba(0, 0, 0, 0.7)', font: { color: '#fff' }};
+
+      Plotly.newPlot('cpu-gauge', [cpuGauge], cpuGaugeLayout);
+      Plotly.newPlot('mem-gauge', [memGauge], memGaugeLayout);
+    </script>
+  </body>
+</html>
