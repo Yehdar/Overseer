@@ -7,7 +7,7 @@ Monitoring app that checks CPU and memory utilization
 AWS (ECR, boto3, EKR), Docker, Python, Flask, JavaScript, HTML, CSS
 
 <hr> 
-Configuration
+
 ## Configuration
 You can run this project in one of two ways.
 
