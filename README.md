@@ -11,8 +11,6 @@ AWS (ECR, boto3, EKR), Docker, Python, Flask, JavaScript, HTML, CSS
 ## Configuration
 You can run this project in one of two ways.
 
-**With Docker**
-
 1. Clone the repository to your machine
 
        $ git clone https://github.com/Yehdar/Overseer.git
@@ -20,6 +18,10 @@ You can run this project in one of two ways.
 2. Change into the directory
 
        $ cd overseer
+
+<br>
+
+**With Docker**
 
 3. After turning on Docker, run this command first
 
@@ -31,21 +33,26 @@ You can run this project in one of two ways.
 
 5. The server should now be started, navigate to `http://localhost/` in your browser and try not to break anything!
 
+<br>
+
 **Without Docker**
 
-1. It is recommended you send up a virtual environment (but completely optional)
-       
+3. It is recommended you send up a virtual environment (but completely optional)
+
+       $ sudo apt isntall python3-virtualenv
        $ virtualenv env
        $ source env/bin/activate
 
-2. Install dependencies
+4. Install dependencies
 
        $ pip3 install -r requirements.txt
 
-1. Start the server (be in the root directory, not in `src/`)
+5. Start the server (be in the root directory, not in `src/`)
 
        $ python3 app.py
        
-2. The server should now be started, navigate to `http://localhost:5000` in your browser and try not to break anything!
+6. The server should now be started, navigate to `http://localhost:5000` in your browser and try not to break anything!
 
-3. Note - if on Windows and not using Docker, you may need to go into `src/main.py` and change `app.run(host='0.0.0.0')` to `app.run(host='127.0.0.1')`
+7. Note - if on Windows and not using Docker, you may need to go into `src/main.py` and change `app.run(host='0.0.0.0')` to `app.run(host='127.0.0.1')`
+
+8. Type `deactivate` to leave the virtual environment
